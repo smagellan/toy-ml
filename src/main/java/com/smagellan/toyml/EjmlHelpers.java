@@ -59,4 +59,21 @@ public class EjmlHelpers {
         }
         return w;
     }
+
+    public static SimpleMatrix maxPerRow(SimpleMatrix h2) {
+        SimpleMatrix result = new SimpleMatrix(h2.numRows(), 1);
+        for (int rowNum = 0; rowNum < h2.numRows(); ++rowNum) {
+            double max = h2.get(rowNum, 0);
+            int index = 0;
+            for (int colNum = 0; colNum < h2.numCols(); ++colNum) {
+                double elVal = h2.get(rowNum, colNum);
+                if (elVal > max) {
+                    max = elVal;
+                    index = colNum;
+                }
+            }
+            result.set(rowNum, 0, index);
+        }
+        return result;
+    }
 }
