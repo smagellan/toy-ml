@@ -48,9 +48,9 @@ public class EjmlHelpers {
         return result;
     }
 
-    public static SimpleMatrix randInitializeWeights(int lIn, int lOut) {
+    public static SimpleMatrix randInitializeWeights(int lIn, int lOut, long seed) {
         SimpleMatrix w = EjmlHelpers.zeros(lOut, lIn + 1);
-        Random r = new Random();
+        Random r = new Random(seed);
         DMatrixIterator iter = EjmlHelpers.iterator(w);
         while (iter.hasNext()) {
             iter.next();

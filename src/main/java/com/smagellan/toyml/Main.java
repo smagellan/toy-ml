@@ -1,5 +1,9 @@
 package com.smagellan.toyml;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.ejml.data.DMatrix;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.equation.Equation;
@@ -21,21 +25,19 @@ public class Main {
     public static final File EX4_DATA1 = new File("/home/vladimir/projects/coursera/machine-learning/machine-learning-ex4/ex4/ex4data1.mat");
     public static final File EX4_WEIGHTS = new File("/home/vladimir/projects/coursera/machine-learning/machine-learning-ex4/ex4/ex4weights.mat");
 
-    public static void main(String[] args) throws IOException {
-        DMatrix featuresMatrix;
-        DMatrix yMatrix;
-        try(Source source  = Sources.openFile(EX4_DATA1); Mat5File file = Mat5.newReader(source).readMat()) {
-            featuresMatrix = loadMatrix(file, "X");
-            yMatrix        = loadMatrix(file, "y");
-        }
 
+    public void doFit(Triple<DMatrix, DMatrix, Long> params) {
+        doFit(params.getLeft(), params.getMiddle(), params.getRight());
+    }
+
+    public void doFit(DMatrix featuresMatrix, DMatrix yMatrix, long seed) {
         int inputLayerSize  = 400;
         int hiddenLayerSize = 25;
         int numLabels       = 10;
         double lambda       = 1;
 
-        SimpleMatrix theta1 = EjmlHelpers.randInitializeWeights(inputLayerSize, hiddenLayerSize);
-        SimpleMatrix theta2 = EjmlHelpers.randInitializeWeights(hiddenLayerSize, numLabels);
+        SimpleMatrix theta1 = EjmlHelpers.randInitializeWeights(inputLayerSize, hiddenLayerSize, seed);
+        SimpleMatrix theta2 = EjmlHelpers.randInitializeWeights(hiddenLayerSize, numLabels, seed);
 
 
         Equation nnParamsUnroller = new Equation();
@@ -68,6 +70,21 @@ public class Main {
         SimpleMatrix predicted = Predictor.predict(learnedTheta1, learnedTheta2, featuresMatrixWithOnes);
         int predictedCount = predictionsMatchedCount(predicted, SimpleMatrix.wrap(yMatrix));
         logger.debug("accuracy: {}", ((double)predictedCount) * 100 / yMatrix.getNumRows());
+    }
+
+    public static Triple<DMatrix, DMatrix, Long> loadParams(long seed) throws IOException {
+        DMatrix featuresMatrix;
+        DMatrix yMatrix;
+        try(Source source  = Sources.openFile(EX4_DATA1); Mat5File file = Mat5.newReader(source).readMat()) {
+            featuresMatrix = loadMatrix(file, "X");
+            yMatrix        = loadMatrix(file, "y");
+        }
+        return ImmutableTriple.of(featuresMatrix, yMatrix, seed);
+    }
+
+    public static void main(String[] args) throws IOException {
+        Triple<DMatrix, DMatrix, Long> params = loadParams(100);
+        new Main().doFit(params);
     }
 
     public static int predictionsMatchedCount(SimpleMatrix predicted, SimpleMatrix yMatrix) {
