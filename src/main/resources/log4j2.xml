@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug" strict="true">
+    <!-- This config is used before logging is reinitialized -->
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <!-- PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{42} - %msg %n" /-->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{42} - %msg %xThrowable{full,separator(|)} %n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="CONSOLE"/>
+        </Root>
+    </Loggers>
+</Configuration>
