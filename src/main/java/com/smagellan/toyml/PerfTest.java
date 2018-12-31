@@ -3,11 +3,11 @@ package com.smagellan.toyml;
 import org.apache.commons.lang3.tuple.Triple;
 import org.ejml.data.DMatrix;
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.profile.StackProfiler;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import pl.project13.scala.jmh.extras.profiler.AsyncProfiler;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ public class PerfTest {
                 .shouldFailOnError(true)
                 .shouldDoGC(true)
                 .jvmArgs("-server")
-                .addProfiler(StackProfiler.class)
+                .addProfiler(AsyncProfiler.class, "asyncProfilerDir=/home/vladimir/projects/async-profiler/")
                 .build();
 
         new Runner(options).run();

@@ -1,8 +1,6 @@
 package com.smagellan.toyml;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.ejml.data.DMatrix;
 import org.ejml.data.DMatrixRMaj;
