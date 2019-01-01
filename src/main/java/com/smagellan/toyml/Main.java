@@ -35,7 +35,7 @@ public class Main {
         double lambda       = 1;
 
         SimpleMatrix theta1 = EjmlHelpers.randInitializeWeights(inputLayerSize, hiddenLayerSize, seed);
-        SimpleMatrix theta2 = EjmlHelpers.randInitializeWeights(hiddenLayerSize, numLabels, seed);
+        SimpleMatrix theta2 = EjmlHelpers.randInitializeWeights(hiddenLayerSize, numLabels, 2 * seed);
 
 
         Equation nnParamsUnroller = new Equation();
