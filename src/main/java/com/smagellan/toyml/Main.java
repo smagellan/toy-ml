@@ -41,14 +41,14 @@ public class Main {
         Equation nnParamsUnroller = new Equation();
         nnParamsUnroller.alias(theta1, "Theta1");
         nnParamsUnroller.alias(theta2, "Theta2");
-        SimpleMatrix nnParams = SimpleMatrix.wrap(new DMatrixRMaj(theta1.getNumElements() + theta2.getNumElements(), 1));
+        SimpleMatrix nnParams = new SimpleMatrix(theta1.getNumElements() + theta2.getNumElements(), 1);
         nnParamsUnroller.alias(nnParams, "nn_params");
         nnParamsUnroller.process("nn_params = [Theta1(:), Theta2(:)]");
         nnParams = nnParams.transpose();
 
 
         Equation featuresMatrixEnricher    = new Equation();
-        SimpleMatrix featuresMatrixWithOnes = SimpleMatrix.wrap(new DMatrixRMaj(featuresMatrix.getNumRows(), featuresMatrix.getNumCols() + 1));
+        SimpleMatrix featuresMatrixWithOnes = new SimpleMatrix(featuresMatrix.getNumRows(), featuresMatrix.getNumCols() + 1);
         featuresMatrixEnricher.alias(featuresMatrix, "X");
         featuresMatrixEnricher.alias(featuresMatrixWithOnes, "Xw1");
         featuresMatrixEnricher.alias(featuresMatrix.getNumRows(), "m");
